@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MSD.Product.API.Models;
 using MSD.Product.Domain.Interfaces.Services;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace MSD.Product.API.Controllers.Common
 {
@@ -15,9 +17,16 @@ namespace MSD.Product.API.Controllers.Common
             this.warningService = warningService;
         }
 
-        protected new IActionResult Response(object result = null)
+        protected async Task<IActionResult> Response(object result = null)
         {
-            var response = new ApiDefaultResponse(result, !warningService.Any(), warningService.List());
+            var payload = result;
+            if (result is ConfiguredTaskAwaitable)
+            {
+                await (ConfiguredTaskAwaitable)result;
+                payload = null;
+            }
+
+            var response = new ApiDefaultResponse(payload, !warningService.Any(), warningService.List());
 
             if (response.Success)
                 return Ok(response);

@@ -53,9 +53,27 @@ namespace MSD.Product.Domain.Services
             return apiResult.Result;
         }
 
-        public void SetPrice(PriceDto dto)
-        { 
-            //var entity = 
+        public async Task SetPriceAsync(PriceDto dto)
+        {
+            var entity = await productRepositoryDb.FirstOrDefaultAsync(e => e.ExternalId == dto.ProductExternalId);
+
+            if (entity == null)
+            { 
+                var apiResult = await productRepositoryApi.GetByExternalIdAsync(dto.ProductExternalId);
+
+                if (!apiResult.Success)
+                {
+                    warningService.Add(apiResult.Warning);
+                    return;
+                }
+
+                entity = new Models.Product(apiResult.Result.Name, apiResult.Result.ExternalId, apiResult.Result.CreatedAtUtc);
+            }
+
+            warningService.Add(entity.SetPrice(dto.Price));
+
+            if (!warningService.Any())
+                await productRepositoryDb.SaveAsync(entity);
         }
     }
 }
