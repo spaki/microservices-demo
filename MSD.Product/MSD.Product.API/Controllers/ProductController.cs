@@ -27,5 +27,8 @@ namespace MSD.Product.API.Controllers
 
         [HttpPatch]
         public async Task<IActionResult> SearchAsync(PriceDto dto) => await Response(productService.SetPriceAsync(dto).ConfigureAwait(false));
+
+        [HttpGet("price")]
+        public async Task<IActionResult> SearchPricedAsync(string value = null, int page = 1) => await Response(await productService.SearchPricedAsync(value, page).ConfigureAwait(false));
     }
 }

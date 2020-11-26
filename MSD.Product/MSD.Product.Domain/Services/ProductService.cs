@@ -3,6 +3,7 @@ using MSD.Product.Domain.Dtos.ProductDtos;
 using MSD.Product.Domain.Interfaces.Repositories;
 using MSD.Product.Domain.Interfaces.Services;
 using MSD.Product.Domain.Services.Common;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -74,6 +75,18 @@ namespace MSD.Product.Domain.Services
 
             if (!warningService.Any())
                 await productRepositoryDb.SaveAsync(entity);
+        }
+
+        public async Task<PagedResult<ProductDto>> SearchPricedAsync(string value = null, int page = 1)
+        {
+            var result = productRepositoryDb
+                .Page(
+                    e =>
+                        (value == null || e.Name.IndexOf(value, StringComparison.InvariantCultureIgnoreCase) >= 0),
+                    page
+                ).To(e => new ProductDto(e));
+
+            return result;
         }
     }
 }

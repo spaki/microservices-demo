@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MSD.Product.Domain.Dtos.Common
@@ -30,5 +31,7 @@ namespace MSD.Product.Domain.Dtos.Common
 
             return listOfItems;
         }
+
+        public PagedResult<TResult> To<TResult>(Func<T, TResult> conversion) => Items != null ? new PagedResult<TResult>(Page, TotalPages, Items.Select(conversion)) : new PagedResult<TResult>(Page, TotalPages, null);
     }
 }

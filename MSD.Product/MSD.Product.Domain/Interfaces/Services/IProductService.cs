@@ -10,5 +10,6 @@ namespace MSD.Product.Domain.Interfaces.Services
         Task<PagedResult<ProductListItemDto>> SearchAsync(string value = null, int page = 1);
         Task<ProductDto> GetByExternalIdAsync(string externalId);
         Task SetPriceAsync(PriceDto dto);
+        Task<PagedResult<ProductDto>> SearchPricedAsync(string value = null, int page = 1);
     }
 }

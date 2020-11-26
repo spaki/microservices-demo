@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MSD.Product.Domain.Dtos.Common;
+using MSD.Product.Domain.Infra;
 using MSD.Product.Domain.Interfaces.Repositories.Common;
 using MSD.Product.Domain.Models.Common;
 using MSD.Product.Repository.Db.Context;
@@ -38,6 +40,19 @@ namespace MSD.Product.Repository.Db.Common
         public virtual IQueryable<TEntity> Query() => set.AsQueryable();
 
         public virtual IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> predicate) => set.Where(predicate);
+
+        public virtual PagedResult<TEntity> Page(Expression<Func<TEntity, bool>> predicate, int page = 1, int pageSize = Constants.DefaultPageSize) => this.Page(this.Query(predicate), page, pageSize);
+
+        public virtual PagedResult<T> Page<T>(IQueryable<T> query, int page = 1, int pageSize = Constants.DefaultPageSize)
+        {
+            var totalItems = query.Count();
+            var totalPages = (int)Math.Ceiling((decimal)totalItems / (decimal)pageSize);
+            var startIndex = ((page - 1) * pageSize);
+            var items = query.Skip(startIndex).Take(pageSize).ToList();
+            var result = new PagedResult<T>(page, totalPages, items);
+
+            return result;
+        }
 
         public virtual async Task SaveAsync(TEntity entity)
         {
