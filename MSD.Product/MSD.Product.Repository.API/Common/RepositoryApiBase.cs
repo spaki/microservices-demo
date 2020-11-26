@@ -49,7 +49,7 @@ namespace MSD.Product.Repository.API.Common
 
             var json = await response.Content.ReadAsStringAsync();
             var data = JsonConvert.DeserializeObject<T>(json);
-            var result = new ApiResult<T>(data, url, true);
+            var result = new ApiResult<T>(data, url);
 
             return result;
         }
