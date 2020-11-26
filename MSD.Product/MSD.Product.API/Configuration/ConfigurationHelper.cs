@@ -72,12 +72,15 @@ namespace MSD.Product.API.Configuration
         /// </summary>
         public static IServiceCollection AddHttpClientWithRetryPolicies<TBase>(this IServiceCollection services)
         {
-            var attempts = 2;
+            var attempts = 3;
+            var interval = TimeSpan.FromSeconds(2);
+
             var retryPolicy = Policy
                 .HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
-                .RetryAsync(
+                .WaitAndRetryAsync(
                     attempts,
-                    onRetry: (message, retryCount) => Debug.WriteLine($"API Problem ({retryCount} attempt): {message}")
+                    retryCount => interval,
+                    (message, retryCount) => Debug.WriteLine($"API Problem ({retryCount} attempt): {message}")
                 );
 
             // -> namespace Microsoft.Extensions.DependencyInjection
