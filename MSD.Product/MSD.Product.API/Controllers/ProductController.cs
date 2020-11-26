@@ -18,6 +18,6 @@ namespace MSD.Product.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(string value = null, int page = 1) => Response(await productService.SearchAsync(value, page));
+        public async Task<IActionResult> Get(string value = null, int page = 1) => Response(await productService.SearchAsync(value, page).ConfigureAwait(false));
     }
 }

@@ -28,8 +28,15 @@ namespace MSD.Product.Domain.Services
         public async Task<PagedResult<ProductListItemDto>> SearchAsync(string value = null, int page = 1)
         {
             var apiResult = await productRepositoryApi.SearchAsync(value, page);
-            var result = new PagedResult<ProductListItemDto>(apiResult.Result.Page, apiResult.Result.TotalPages, apiResult.Result.Items.Select(e => new ProductListItemDto(e)));
-            return result;
+
+            if (apiResult.Success)
+            {
+                var result = new PagedResult<ProductListItemDto>(apiResult.Result.Page, apiResult.Result.TotalPages, apiResult.Result.Items.Select(e => new ProductListItemDto(e)));
+                return result;
+            }
+
+            warningService.Add(apiResult.Warning);
+            return null;
         }
 
         public void SetPrice(PriceDto dto)

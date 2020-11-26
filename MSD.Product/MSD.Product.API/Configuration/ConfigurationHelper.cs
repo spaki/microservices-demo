@@ -31,7 +31,7 @@ namespace MSD.Product.API.Configuration
             return services;
         }
 
-        
+
 
         public static IServiceCollection AddMemoryDb(this IServiceCollection services)
         {
@@ -72,29 +72,55 @@ namespace MSD.Product.API.Configuration
         /// </summary>
         public static IServiceCollection AddHttpClientWithRetryPolicies<TBase>(this IServiceCollection services)
         {
-            var attempts = 3;
-            var interval = TimeSpan.FromSeconds(2);
+            //var attempts = 3;
+            //var interval = TimeSpan.FromSeconds(2);
 
-            var retryPolicy = Policy
-                .HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
-                .WaitAndRetryAsync(
-                    attempts,
-                    retryCount => interval,
-                    (message, retryCount) => Debug.WriteLine($"API Problem ({retryCount} attempt): {message}")
-                );
+            //var retryPolicy = Policy
+            //    .HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
+            //    .WaitAndRetryAsync(
+            //        attempts,
+            //        retryCount => interval,
+            //        (message, retryCount) => Debug.WriteLine($"API Problem ({retryCount} attempt): {message}")
+            //    );
 
             // -> namespace Microsoft.Extensions.DependencyInjection
             //      public static class HttpClientFactoryServiceCollectionExtensions
             //          public static IHttpClientBuilder AddHttpClient<TClient, [DynamicallyAccessedMembersAttribute(DynamicallyAccessedMemberTypes.PublicConstructors)] TImplementation>(this IServiceCollection services)
             var httpClientFactoryMethod = typeof(HttpClientFactoryServiceCollectionExtensions).GetMethods().FirstOrDefault(e => e.GetGenericArguments().Count() == 2 && e.GetParameters().Count() == 1);
 
-            ListTypesOf<TBase>().ForEach(type => {
+            ListTypesOf<TBase>().ForEach(type =>
+            {
                 var httpFactoryResult = httpClientFactoryMethod.MakeGenericMethod(type.GetInterface($"I{type.Name}"), type).Invoke(null, new object[] { services });
-                PollyHttpClientBuilderExtensions.AddPolicyHandler((IHttpClientBuilder)httpFactoryResult, retryPolicy);
+                //PollyHttpClientBuilderExtensions.AddPolicyHandler((IHttpClientBuilder)httpFactoryResult, retryPolicy);
             });
 
             return services;
         }
+        //public static IServiceCollection AddHttpClientWithRetryPolicies<TBase>(this IServiceCollection services)
+        //{
+        //    var attempts = 3;
+        //    var interval = TimeSpan.FromSeconds(2);
+
+        //    var retryPolicy = Policy
+        //        .HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
+        //        .WaitAndRetryAsync(
+        //            attempts,
+        //            retryCount => interval,
+        //            (message, retryCount) => Debug.WriteLine($"API Problem ({retryCount} attempt): {message}")
+        //        );
+
+        //    // -> namespace Microsoft.Extensions.DependencyInjection
+        //    //      public static class HttpClientFactoryServiceCollectionExtensions
+        //    //          public static IHttpClientBuilder AddHttpClient<TClient, [DynamicallyAccessedMembersAttribute(DynamicallyAccessedMemberTypes.PublicConstructors)] TImplementation>(this IServiceCollection services)
+        //    var httpClientFactoryMethod = typeof(HttpClientFactoryServiceCollectionExtensions).GetMethods().FirstOrDefault(e => e.GetGenericArguments().Count() == 2 && e.GetParameters().Count() == 1);
+
+        //    ListTypesOf<TBase>().ForEach(type => {
+        //        var httpFactoryResult = httpClientFactoryMethod.MakeGenericMethod(type.GetInterface($"I{type.Name}"), type).Invoke(null, new object[] { services });
+        //        PollyHttpClientBuilderExtensions.AddPolicyHandler((IHttpClientBuilder)httpFactoryResult, retryPolicy);
+        //    });
+
+        //    return services;
+        //}
         //public static IServiceCollection AddHttpClientWithRetryPolicies(this IServiceCollection services)
         //{
         //    var attempts = 2;
