@@ -31,25 +31,8 @@ namespace MSD.Product.Repository.API.Common
             this.log = log;
         }
 
-        public string BuildUrl(params KeyValuePair<string, object>[] parameters)
+        public async Task<ApiResult<T>> GetAsync<T>(string url)
         {
-            var url = settings.StarWarsApiUrl;
-
-            if (parameters != null && parameters.Any())
-            {
-                var dictionary = parameters
-                    .Where(e => e.Value != null && e.Key != null)
-                    .ToDictionary(e => e.Key, e => e.Value.ToString());
-
-                url = QueryHelpers.AddQueryString(url, dictionary);
-            }
-
-            return url;
-        }
-
-        public async Task<ApiResult<T>> Get<T>(params KeyValuePair<string, object>[] parameters)
-        {
-            var url = BuildUrl(parameters);
             var retryPolice = GetRetryPolicy();
 
             var executionResult = await retryPolice.ExecuteAndCaptureAsync(async () =>
@@ -68,6 +51,25 @@ namespace MSD.Product.Repository.API.Common
             var result = new ApiResult<T>(data, url);
 
             return result;
+        }
+
+        public async Task<ApiResult<T>> GetAsync<T>(params KeyValuePair<string, object>[] parameters) => await GetAsync<T>(BuildUrl(parameters));
+        
+
+        public string BuildUrl(params KeyValuePair<string, object>[] parameters)
+        {
+            var url = settings.StarWarsApiUrl;
+
+            if (parameters != null && parameters.Any())
+            {
+                var dictionary = parameters
+                    .Where(e => e.Value != null && e.Key != null)
+                    .ToDictionary(e => e.Key, e => e.Value.ToString());
+
+                url = QueryHelpers.AddQueryString(url, dictionary);
+            }
+
+            return url;
         }
 
         private AsyncRetryPolicy<HttpResponseMessage> GetRetryPolicy()

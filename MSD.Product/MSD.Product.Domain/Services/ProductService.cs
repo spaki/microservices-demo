@@ -39,6 +39,20 @@ namespace MSD.Product.Domain.Services
             return null;
         }
 
+        public async Task<ProductDto> GetByExternalIdAsync(string externalId)
+        {
+            var dbResult = await productRepositoryDb.FirstOrDefaultAsync(e => e.ExternalId == externalId);
+
+            if (dbResult != null)
+                return new ProductDto(dbResult);
+
+            var apiResult = await productRepositoryApi.GetByExternalIdAsync(externalId);
+            
+            warningService.Add(apiResult.Warning);
+
+            return apiResult.Result;
+        }
+
         public void SetPrice(PriceDto dto)
         { 
             //var entity = 

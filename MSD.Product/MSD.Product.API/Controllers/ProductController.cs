@@ -2,6 +2,7 @@
 using MSD.Product.API.Controllers.Common;
 using MSD.Product.Domain.Interfaces.Services;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MSD.Product.API.Controllers
 {
@@ -18,6 +19,9 @@ namespace MSD.Product.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(string value = null, int page = 1) => Response(await productService.SearchAsync(value, page).ConfigureAwait(false));
+        public async Task<IActionResult> SearchAsync(string value = null, int page = 1) => Response(await productService.SearchAsync(value, page).ConfigureAwait(false));
+
+        [HttpGet("{externalId}")]
+        public async Task<IActionResult> GetByExternalIdAsync(string externalId) => Response(await productService.GetByExternalIdAsync(HttpUtility.UrlDecode(externalId)).ConfigureAwait(false));
     }
 }

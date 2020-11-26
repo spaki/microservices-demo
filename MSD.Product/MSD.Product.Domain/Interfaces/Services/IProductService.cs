@@ -8,5 +8,6 @@ namespace MSD.Product.Domain.Interfaces.Services
     public interface IProductService : IServiceBase
     {
         Task<PagedResult<ProductListItemDto>> SearchAsync(string value = null, int page = 1);
+        Task<ProductDto> GetByExternalIdAsync(string externalId);
     }
 }

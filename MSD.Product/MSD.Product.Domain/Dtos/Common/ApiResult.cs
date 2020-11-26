@@ -17,7 +17,6 @@ namespace MSD.Product.Domain.Dtos.Common
 
         public TResult Result { get; private set; }
 
-        public ApiResult<TNewResult> To<TNewResult>(Func<TResult, TNewResult> conversion) => new ApiResult<TNewResult>(conversion.Invoke(Result), Url, Warning);
-        public ApiResult<TNewResult> ToEmptyResultOf<TNewResult>() => new ApiResult<TNewResult>(Url, Warning);
+        public ApiResult<TNewResult> To<TNewResult>(Func<TResult, TNewResult> conversion) => Result != null ? new ApiResult<TNewResult>(conversion.Invoke(Result), Url, Warning) : new ApiResult<TNewResult>(Url, Warning);
     }
 }
