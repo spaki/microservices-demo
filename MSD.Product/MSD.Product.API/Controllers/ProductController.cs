@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MSD.Product.API.Controllers.Common;
+using MSD.Product.API.Models;
 using MSD.Product.Domain.Dtos.Common;
 using MSD.Product.Domain.Dtos.ProductDtos;
 using MSD.Product.Domain.Interfaces.Services;
@@ -22,18 +23,15 @@ namespace MSD.Product.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(PagedResult<ProductListItemDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> SearchAsync(string value = null, int page = 1) => await Response(await productService.SearchAsync(value, page).ConfigureAwait(false));
+        public async Task<ActionResult<ApiDefaultResponse<PagedResult<ProductListItemDto>>>> SearchAsync(string value = null, int page = 1) => Response(await productService.SearchAsync(value, page).ConfigureAwait(false));
 
         [HttpGet("{externalId}")]
-        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetByExternalIdAsync(string externalId) => await Response(await productService.GetByExternalIdAsync(HttpUtility.UrlDecode(externalId)).ConfigureAwait(false));
+        public async Task<ActionResult<ApiDefaultResponse<ProductDto>>> GetByExternalIdAsync(string externalId) => Response(await productService.GetByExternalIdAsync(HttpUtility.UrlDecode(externalId)).ConfigureAwait(false));
 
         [HttpPatch]
-        public async Task<IActionResult> SetPriceAsync(PriceDto dto) => await Response(productService.SetPriceAsync(dto).ConfigureAwait(false));
+        public async Task<ActionResult<ApiDefaultResponseBase>> SetPriceAsync(PriceDto dto) => await Response(productService.SetPriceAsync(dto).ConfigureAwait(false));
 
         [HttpGet("price")]
-        [ProducesResponseType(typeof(PagedResult<ProductDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> SearchPricedAsync(string value = null, int page = 1) => await Response(await productService.SearchPricedAsync(value, page).ConfigureAwait(false));
+        public async Task<ActionResult<ApiDefaultResponse<PagedResult<ProductDto>>>> SearchPricedAsync(string value = null, int page = 1) => Response(await productService.SearchPricedAsync(value, page).ConfigureAwait(false));
     }
 }

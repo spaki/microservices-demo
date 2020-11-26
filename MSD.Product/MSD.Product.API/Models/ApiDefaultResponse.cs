@@ -3,17 +3,13 @@ using System.Collections.Generic;
 
 namespace MSD.Product.API.Models
 {
-    public class ApiDefaultResponse
+    public class ApiDefaultResponse<T> : ApiDefaultResponseBase
     {
-        public ApiDefaultResponse(object payload, bool success, List<Warning> messages)
+        public ApiDefaultResponse(T payload, bool success, List<Warning> messages) : base (success, messages)
         {
             Payload = payload;
-            Success = success;
-            Messages = messages;
         }
 
-        public object Payload { get; private set; }
-        public bool Success { get; private set; }
-        public List<Warning> Messages { get; private set; }
+        public T Payload { get; private set; }
     }
 }

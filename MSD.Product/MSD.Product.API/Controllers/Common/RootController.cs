@@ -17,16 +17,20 @@ namespace MSD.Product.API.Controllers.Common
             this.warningService = warningService;
         }
 
-        protected async Task<IActionResult> Response(object result = null)
+        protected ActionResult<ApiDefaultResponse<T>> Response<T>(T result)
         {
-            var payload = result;
-            if (result is ConfiguredTaskAwaitable)
-            {
-                await (ConfiguredTaskAwaitable)result;
-                payload = null;
-            }
+            var response = new ApiDefaultResponse<T>(result, !warningService.Any(), warningService.List());
 
-            var response = new ApiDefaultResponse(payload, !warningService.Any(), warningService.List());
+            if (response.Success)
+                return Ok(response);
+
+            return BadRequest(response);
+        }
+
+        protected async Task<ActionResult<ApiDefaultResponseBase>> Response(ConfiguredTaskAwaitable task)
+        {
+            await task;
+            var response = new ApiDefaultResponseBase(!warningService.Any(), warningService.List());
 
             if (response.Success)
                 return Ok(response);
