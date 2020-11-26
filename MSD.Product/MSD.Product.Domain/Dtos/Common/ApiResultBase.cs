@@ -1,4 +1,7 @@
-﻿namespace MSD.Product.Domain.Dtos.Common
+﻿using MSD.Product.Domain.Models.Common;
+using System;
+
+namespace MSD.Product.Domain.Dtos.Common
 {
     public class ApiResultBase
     {
@@ -7,15 +10,16 @@
             Url = url;
         }
 
-        public ApiResultBase(string url, bool success, string message = null)
+        public ApiResultBase(string url, Warning warning) : this(url)
         {
-            Url = url;
-            Success = success;
-            Message = message;
+            Warning = warning;
         }
 
+        public ApiResultBase(string url, Exception exception) : this(url, new Warning(exception)) 
+        { }
+
         public string Url { get; private set; }
-        public bool Success { get; private set; }
-        public string Message { get; private set; }
+        public Warning Warning { get; private set; }
+        public bool Success { get => Warning == null; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSD.Product.Domain.Models.Common;
+using System;
 
 namespace MSD.Product.Domain.Dtos.Common
 {
@@ -6,10 +7,16 @@ namespace MSD.Product.Domain.Dtos.Common
     {
         public ApiResult(TResult result, string url) : base(url) => Result = result;
 
-        public ApiResult(TResult result, string url, bool success, string message = null) : base(url, success, message) => Result = result;
+        public ApiResult(string url, Warning warning) : base(url, warning) 
+        { }
+
+        public ApiResult(string url, Exception exception) : base(url, exception)
+        { }
+
+        public ApiResult(TResult result, string url, Warning warning) : base(url, warning) => Result = result;
 
         public TResult Result { get; private set; }
 
-        public ApiResult<TNewResult> To<TNewResult>(Func<TResult, TNewResult> conversion) => new ApiResult<TNewResult>(conversion.Invoke(Result), Url, Success, Message);
+        public ApiResult<TNewResult> To<TNewResult>(Func<TResult, TNewResult> conversion) => new ApiResult<TNewResult>(conversion.Invoke(Result), Url, Warning);
     }
 }
