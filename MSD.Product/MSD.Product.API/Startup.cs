@@ -25,7 +25,7 @@ namespace MSD.Product.API
             .AddScopedByBaseType<ServiceBase>()
             .AddScopedByBaseType<RepositoryDbBase>()
             .AddHttpClientWithRetryPolicies<RepositoryApiBase>()
-            .AddControllers();
+            .AddCustomControllers();
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider) => app
             .UseCustomCors()

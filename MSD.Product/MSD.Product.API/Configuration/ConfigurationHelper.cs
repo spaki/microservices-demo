@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace MSD.Product.API.Configuration
 {
@@ -53,6 +54,15 @@ namespace MSD.Product.API.Configuration
                 p.GroupNameFormat = "'v'VVV";
                 p.SubstituteApiVersionInUrl = true;
             });
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomControllers(this IServiceCollection services)
+        {
+            services
+                .AddControllers()
+                .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             return services;
         }
