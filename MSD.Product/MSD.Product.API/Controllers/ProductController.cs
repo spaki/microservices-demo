@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MSD.Product.API.Controllers.Common;
+using MSD.Product.Domain.Dtos.Common;
 using MSD.Product.Domain.Dtos.ProductDtos;
 using MSD.Product.Domain.Interfaces.Services;
 using System.Threading.Tasks;
@@ -20,15 +22,18 @@ namespace MSD.Product.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(PagedResult<ProductListItemDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> SearchAsync(string value = null, int page = 1) => await Response(await productService.SearchAsync(value, page).ConfigureAwait(false));
 
         [HttpGet("{externalId}")]
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetByExternalIdAsync(string externalId) => await Response(await productService.GetByExternalIdAsync(HttpUtility.UrlDecode(externalId)).ConfigureAwait(false));
 
         [HttpPatch]
-        public async Task<IActionResult> SearchAsync(PriceDto dto) => await Response(productService.SetPriceAsync(dto).ConfigureAwait(false));
+        public async Task<IActionResult> SetPriceAsync(PriceDto dto) => await Response(productService.SetPriceAsync(dto).ConfigureAwait(false));
 
         [HttpGet("price")]
+        [ProducesResponseType(typeof(PagedResult<ProductDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> SearchPricedAsync(string value = null, int page = 1) => await Response(await productService.SearchPricedAsync(value, page).ConfigureAwait(false));
     }
 }
