@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MSD.ZipCode.V2.Domain.Infra.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,17 @@ namespace MSD.ZipCode.V2.API.Configuration
             services
                 .AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomDistributedRedisCache(this IServiceCollection services, AppSettings settings)
+        {
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = settings.RedisConn;
+                options.InstanceName = "ZipCodeV2-";
+            });
 
             return services;
         }

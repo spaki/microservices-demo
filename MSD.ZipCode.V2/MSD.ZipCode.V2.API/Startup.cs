@@ -20,6 +20,7 @@ namespace MSD.ZipCode.V2.API
             .AddSwaggerGen()
             .AddScopedByBaseType<ServiceBase>()
             .AddScopedByBaseType<RepositorySoapBase>()
+            .AddCustomDistributedRedisCache(AppSettings)
             .AddCustomControllers();
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) => app

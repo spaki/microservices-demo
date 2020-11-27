@@ -19,12 +19,12 @@ namespace MSD.ZipCode.Domain.Models
             ZipCode = zipCode;
         }
 
-        public virtual string Neighborhood { get; private set; }
-        public virtual string City { get; private set; }
-        public virtual string State { get; private set; }
-        public virtual string Street { get; private set; }
-        public virtual string AdditionalInfo { get; private set; }
-        public virtual string ZipCode { get; private set; }
+        public virtual string Neighborhood { get; set; }
+        public virtual string City { get; set; }
+        public virtual string State { get; set; }
+        public virtual string Street { get; set; }
+        public virtual string AdditionalInfo { get; set; }
+        public virtual string ZipCode { get; set; }
 
 
 

@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using MSD.ZipCode.Domain.Models;
 using MSD.ZipCode.V2.Domain.Dtos.Common;
+using MSD.ZipCode.V2.Domain.Infra;
 using MSD.ZipCode.V2.Domain.Infra.Settings;
 using MSD.ZipCode.V2.Domain.Interfaces.Repositories;
 using MSD.ZipCode.V2.Repository.SOAP.Common;
@@ -14,15 +16,20 @@ namespace MSD.ZipCode.V2.Repository.SOAP
     public class ZipCodeRepositorySoap : RepositorySoapBase, IZipCodeRepositorySoap
     {
         private readonly AppSettings settings;
+        private readonly IDistributedCache cache;
+
         public ZipCodeRepositorySoap(
             AppSettings settings,
+            IDistributedCache cache,
             ILogger<ZipCodeRepositorySoap> log
-        ) : base(log)
+        ) : base(cache, log)
         {
             this.settings = settings;
         }
 
-        public async Task<SoapResult<Address>> GetAddressAsync(string zipCode)
+        public async Task<SoapResult<Address>> GetAddressAsync(string zipCode) => await GetFromCacheAndSetAsync(Constants.ZipCodeCacheResultKey, zipCode, async () => await GetAddressFromSoapAsync(zipCode));
+
+        private async Task<SoapResult<Address>> GetAddressFromSoapAsync(string zipCode)
         {
             var retryPolice = GetRetryPolicy();
             var executionResult = await retryPolice.ExecuteAndCaptureAsync(async () =>

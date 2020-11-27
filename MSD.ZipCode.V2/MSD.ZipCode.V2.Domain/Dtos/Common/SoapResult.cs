@@ -5,6 +5,8 @@ namespace MSD.ZipCode.V2.Domain.Dtos.Common
 {
     public class SoapResult<TResult>
     {
+        public SoapResult()
+        { }
         public SoapResult(string url) => Url = url;
 
         public SoapResult(string url, Warning warning) : this(url) => Warning = warning;
@@ -18,9 +20,9 @@ namespace MSD.ZipCode.V2.Domain.Dtos.Common
 
 
 
-        public string Url { get; private set; }
-        public Warning Warning { get; private set; }
+        public string Url { get; set; }
+        public Warning Warning { get; set; }
         public bool Success { get => Warning == null; }
-        public TResult Result { get; private set; }
+        public TResult Result { get; set; }
     }
 }

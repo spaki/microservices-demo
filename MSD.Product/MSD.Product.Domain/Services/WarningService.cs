@@ -1,5 +1,4 @@
-﻿using MSD.Product.Domain.Dtos.Common;
-using MSD.Product.Domain.Enums;
+﻿using MSD.Product.Domain.Enums;
 using MSD.Product.Domain.Interfaces.Services;
 using MSD.Product.Domain.Models.Common;
 using MSD.Product.Domain.Services.Common;
