@@ -1,20 +1,22 @@
-﻿namespace MSD.ZipCode.V1.API.Dto
+﻿using MSD.ZipCode.V1.API.Model;
+
+namespace MSD.ZipCode.V1.API.Dto
 {
     public class Address
     {
-        public Address(Model.Address model)
+        public Address(consultaCEPResponse model)
         {
-            City = model.Cidade;
-            State = model.UF;
-            Street = model.End;
-            AdditionalInfo = model.Complemento2;
+            City = model.@return.cidade;
+            State = model.@return.uf;
+            Street = model.@return.end;
+            AdditionalInfo = model.@return.complemento2;
 
-            Neighborhood = model.Bairro;
-            ZipCode = model.Cep;
+            Neighborhood = model.@return.bairro;
+            ZipCode = model.@return.cep;
 
             Formatted = $"{City}/{State} - {Street} - ";
 
-            if (string.IsNullOrWhiteSpace(AdditionalInfo))
+            if (!string.IsNullOrWhiteSpace(AdditionalInfo))
                 Formatted += AdditionalInfo + " - ";
 
             Formatted += $"{Neighborhood} - {ZipCode}";
