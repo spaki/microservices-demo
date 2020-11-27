@@ -5,18 +5,11 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using MSD.Product.Domain.Interfaces.Repositories;
-using MSD.Product.Repository.API;
 using MSD.Product.Repository.Db.Context;
-using Polly;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Text.Json.Serialization;
 

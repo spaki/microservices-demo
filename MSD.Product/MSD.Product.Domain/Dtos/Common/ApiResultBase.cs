@@ -5,15 +5,9 @@ namespace MSD.Product.Domain.Dtos.Common
 {
     public class ApiResultBase
     {
-        public ApiResultBase(string url)
-        {
-            Url = url;
-        }
+        public ApiResultBase(string url) => Url = url;
 
-        public ApiResultBase(string url, Warning warning) : this(url)
-        {
-            Warning = warning;
-        }
+        public ApiResultBase(string url, Warning warning) : this(url) => Warning = warning;
 
         public ApiResultBase(string url, Exception exception) : this(url, new Warning(exception)) 
         { }
