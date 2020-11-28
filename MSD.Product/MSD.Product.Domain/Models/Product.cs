@@ -1,4 +1,5 @@
 ﻿using MSD.Product.Domain.Models.Common;
+using MSD.Product.Infra.Warning.Dtos;
 using System;
 
 namespace MSD.Product.Domain.Models
@@ -23,7 +24,7 @@ namespace MSD.Product.Domain.Models
         public virtual DateTime CreatedAtUtc { get; set; }
         public virtual DateTime EditedAtUtc { get; set; }
 
-        public Warning SetPrice(decimal price) 
+        public WarningInfo SetPrice(decimal price) 
         {
             if (price > 0)
             {
@@ -32,7 +33,7 @@ namespace MSD.Product.Domain.Models
             }
             else 
             {
-                return new Warning("Invalid price!");
+                return new WarningInfo("Invalid price!");
             }
 
             return null;

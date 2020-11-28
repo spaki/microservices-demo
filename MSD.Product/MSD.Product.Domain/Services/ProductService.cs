@@ -3,6 +3,7 @@ using MSD.Product.Domain.Dtos.ProductDtos;
 using MSD.Product.Domain.Interfaces.Repositories;
 using MSD.Product.Domain.Interfaces.Services;
 using MSD.Product.Domain.Services.Common;
+using MSD.Product.Infra.Warning;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,17 +12,17 @@ namespace MSD.Product.Domain.Services
 {
     public class ProductService : ServiceBase, IProductService
     {
-        private readonly IWarningService warningService;
+        private readonly WarningManagement warningManagement;
         private readonly IProductRepositoryApi productRepositoryApi;
         private readonly IProductRepositoryDb productRepositoryDb;
 
         public ProductService(
-            IWarningService warningService,
+            WarningManagement warningManagement,
             IProductRepositoryApi productRepositoryApi,
             IProductRepositoryDb productRepositoryDb
         )
         {
-            this.warningService = warningService;
+            this.warningManagement = warningManagement;
             this.productRepositoryApi = productRepositoryApi;
             this.productRepositoryDb = productRepositoryDb;
         }
@@ -36,7 +37,7 @@ namespace MSD.Product.Domain.Services
                 return result;
             }
 
-            warningService.Add(apiResult.Warning);
+            warningManagement.Add(apiResult.Warning);
             return null;
         }
 
@@ -49,7 +50,7 @@ namespace MSD.Product.Domain.Services
 
             var apiResult = await productRepositoryApi.GetByExternalIdAsync(externalId);
             
-            warningService.Add(apiResult.Warning);
+            warningManagement.Add(apiResult.Warning);
 
             return apiResult.Result;
         }
@@ -64,16 +65,16 @@ namespace MSD.Product.Domain.Services
 
                 if (!apiResult.Success)
                 {
-                    warningService.Add(apiResult.Warning);
+                    warningManagement.Add(apiResult.Warning);
                     return;
                 }
 
                 entity = new Models.Product(apiResult.Result.Name, apiResult.Result.ExternalId, apiResult.Result.CreatedAtUtc);
             }
 
-            warningService.Add(entity.SetPrice(dto.Price));
+            warningManagement.Add(entity.SetPrice(dto.Price));
 
-            if (!warningService.Any())
+            if (!warningManagement.Any())
                 await productRepositoryDb.SaveAsync(entity);
         }
 

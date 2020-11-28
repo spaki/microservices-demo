@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MSD.Product.Infra\MSD.Product.Infra.csproj" />
+  </ItemGroup>
+
 </Project>

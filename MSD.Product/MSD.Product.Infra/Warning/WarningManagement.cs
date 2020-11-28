@@ -1,17 +1,15 @@
-﻿using MSD.Product.Domain.Enums;
-using MSD.Product.Domain.Interfaces.Services;
-using MSD.Product.Domain.Models.Common;
-using MSD.Product.Domain.Services.Common;
+﻿using MSD.Product.Infra.Warning.Dtos;
+using MSD.Product.Infra.Warning.Enums;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MSD.Product.Domain.Services
+namespace MSD.Product.Infra.Warning
 {
-    public class WarningService : ServiceBase, IWarningService
+    public class WarningManagement
     {
-        private List<Warning> items = new List<Warning>();
+        private List<WarningInfo> items = new List<WarningInfo>();
 
-        public void Add(Warning warning)
+        public void Add(WarningInfo warning)
         {
             if (warning == null)
                 return;
@@ -24,7 +22,7 @@ namespace MSD.Product.Domain.Services
             if (string.IsNullOrWhiteSpace(message))
                 return;
 
-            items.Add(new Warning(message));
+            items.Add(new WarningInfo(message));
         }
 
         public void Add(string message, WarningType warningType)
@@ -32,11 +30,11 @@ namespace MSD.Product.Domain.Services
             if (string.IsNullOrWhiteSpace(message))
                 return;
 
-            items.Add(new Warning(message, warningType));
+            items.Add(new WarningInfo(message, warningType));
         }
 
         public bool Any() => items.Any();
 
-        public List<Warning> List() => items;
+        public List<WarningInfo> List() => items;
     }
 }

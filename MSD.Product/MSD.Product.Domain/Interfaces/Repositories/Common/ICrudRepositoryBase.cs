@@ -1,6 +1,6 @@
 ﻿using MSD.Product.Domain.Dtos.Common;
-using MSD.Product.Domain.Infra;
 using MSD.Product.Domain.Models.Common;
+using MSD.Product.Infra;
 using System;
 using System.Linq;
 using System.Linq.Expressions;

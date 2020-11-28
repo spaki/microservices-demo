@@ -4,6 +4,7 @@ using MSD.Product.API.Models;
 using MSD.Product.Domain.Dtos.Common;
 using MSD.Product.Domain.Dtos.ProductDtos;
 using MSD.Product.Domain.Interfaces.Services;
+using MSD.Product.Infra.Warning;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -14,9 +15,9 @@ namespace MSD.Product.API.Controllers
         private readonly IProductService productService;
 
         public ProductController(
-            IWarningService warningService,
+            WarningManagement warningManagement,
             IProductService productService
-        ) : base(warningService)
+        ) : base(warningManagement)
         {
             this.productService = productService;
         }

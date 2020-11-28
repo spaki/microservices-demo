@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using MSD.Product.Domain.Dtos.Common;
 using MSD.Product.Domain.Dtos.ProductDtos;
-using MSD.Product.Domain.Infra;
-using MSD.Product.Domain.Infra.Settings;
 using MSD.Product.Domain.Interfaces.Repositories;
+using MSD.Product.Infra;
+using MSD.Product.Infra.Api.Dtos;
 using MSD.Product.Repository.API.Common;
 using MSD.Product.Repository.API.Dtos;
 using System;

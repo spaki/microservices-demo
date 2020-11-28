@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using MSD.ZipCode.V2.Domain.Infra;
 using MSD.ZipCode.V2.Domain.Interfaces.Repositories.Common;
 using Newtonsoft.Json;
 using Polly;
@@ -23,7 +24,7 @@ namespace MSD.ZipCode.V2.Repository.SOAP.Common
             this.cache = cache;
         }
 
-        protected async Task<T> GetFromCacheAndSetAsync<T>(string area, string key, Func<Task<T>> Get)
+        protected async Task<T> GetFromCacheAndSetAsync<T>(string area, string key, Func<Task<T>> getAsync)
         {
             var fullKey = $"{area}-{key}";
             var json = await cache.GetStringAsync(fullKey);
@@ -34,11 +35,11 @@ namespace MSD.ZipCode.V2.Repository.SOAP.Common
                 return JsonConvert.DeserializeObject<T>(json);
             }
 
-            var result = await Get();
+            var result = await getAsync();
             json = JsonConvert.SerializeObject(result);
 
             var cacheOptions = new DistributedCacheEntryOptions();
-            cacheOptions.SetAbsoluteExpiration(TimeSpan.FromSeconds(20));
+            cacheOptions.SetAbsoluteExpiration(TimeSpan.FromSeconds(Constants.CacheTimeoutInSeconds));
 
             await cache.SetStringAsync(fullKey, json, cacheOptions);
 
@@ -47,20 +48,12 @@ namespace MSD.ZipCode.V2.Repository.SOAP.Common
             return result;
         }
 
-        protected AsyncRetryPolicy GetRetryPolicy()
-        {
-            var attempts = 3;
-            var interval = TimeSpan.FromSeconds(2);
-
-            var retryPolicy = Policy
+        protected AsyncRetryPolicy GetRetryPolicy() => Policy
                     .Handle<Exception>()
                     .WaitAndRetryAsync(
-                        attempts,
-                        retryCount => interval,
+                        Constants.CiscuitBreakerAttempts,
+                        retryCount => TimeSpan.FromSeconds(Constants.CiscuitBreakerIntervalInSeconds),
                         (message, retryCount) => log.LogError($"SOAP Problem ({retryCount} attempt): {message}")
                     );
-
-            return retryPolicy;
-        }
     }
 }

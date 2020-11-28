@@ -1,4 +1,4 @@
-﻿namespace MSD.Product.Domain.Enums
+﻿namespace MSD.Product.Infra.Warning.Enums
 {
     public enum WarningType
     {

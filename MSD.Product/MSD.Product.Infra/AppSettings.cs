@@ -1,4 +1,4 @@
-﻿namespace MSD.Product.Domain.Infra.Settings
+﻿namespace MSD.Product.Infra
 {
     public class AppSettings
     {

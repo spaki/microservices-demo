@@ -1,6 +1,7 @@
 ﻿using MSD.Product.Domain.Dtos.Common;
 using MSD.Product.Domain.Dtos.ProductDtos;
 using MSD.Product.Domain.Interfaces.Repositories.Common;
+using MSD.Product.Infra.Api.Dtos;
 using System.Threading.Tasks;
 
 namespace MSD.Product.Domain.Interfaces.Repositories

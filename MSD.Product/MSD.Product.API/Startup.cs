@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MSD.Product.API.Configuration;
-using MSD.Product.Domain.Infra.Settings;
 using MSD.Product.Domain.Services.Common;
+using MSD.Product.Infra;
+using MSD.Product.Infra.Warning;
 using MSD.Product.Repository.API.Common;
 using MSD.Product.Repository.Db.Common;
 
@@ -22,6 +23,7 @@ namespace MSD.Product.API
             .AddMemoryDb()
             .AddCustomApiVersioning()
             .AddSwaggerGen()
+            .AddScoped<WarningManagement>()
             .AddScopedByBaseType<ServiceBase>()
             .AddScopedByBaseType<RepositoryDbBase>()
             .AddHttpClientWithRetryPolicies<RepositoryApiBase>()

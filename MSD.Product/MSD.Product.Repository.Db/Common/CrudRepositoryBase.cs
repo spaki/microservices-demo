@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MSD.Product.Domain.Dtos.Common;
-using MSD.Product.Domain.Infra;
 using MSD.Product.Domain.Interfaces.Repositories.Common;
 using MSD.Product.Domain.Models.Common;
+using MSD.Product.Infra;
 using MSD.Product.Repository.Db.Context;
 using System;
 using System.Linq;
