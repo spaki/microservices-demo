@@ -1,0 +1,54 @@
+version: '3'
+services:
+
+##########################################################
+  redis-on:
+    container_name: redis-on
+    image: redis
+    command: --requirepass "Redis123!@#" 
+    ports:
+      - "6379:6379"
+    networks:
+      - greennet
+
+ ##########################################################
+  msd-zipcode-v1-api-on:
+    container_name: msd-zipcode-v1-api-on
+    image: msd-zipcode-v1-api
+    ports:
+      - 8091:80
+    networks:
+      - greennet
+
+##########################################################
+  msd-zipcode-v2-api-on:
+    container_name: msd-zipcode-v2-api-on
+    image: msd-zipcode-v2-api
+    ports:
+      - 8092:80
+    networks:
+      - greennet
+    depends_on:
+      - redis-on
+
+##########################################################
+  msd-product-api-on:
+    container_name: msd-product-api-on
+    image: msd-product-api
+    ports:
+      - 8090:80
+    networks:
+      - greennet
+    depends_on:
+      - msd-zipcode-v1-api-on
+      - msd-zipcode-v2-api-on
+ 
+
+
+volumes:
+  mq_data:
+  elasticsearch_data:
+
+networks:
+  greennet:
+    driver: bridge
