@@ -29,7 +29,7 @@ namespace MSD.Product.Repository.ZipCode.V2.API
 
         public async Task<ApiResult<Address>> GetAddressByZipCodeAsync(string zipCode)
         {
-            var apiResult = await GetAsync<ZipCodeResponse<Address>>(BuildUrl(settings.ZipCodeApiV1, zipCode, true));
+            var apiResult = await GetAsync<ZipCodeResponse<Address>>(BuildUrl(settings.ZipCodeApiV2, zipCode, true));
             apiResult.Result?.Messages?.ForEach(item => warningManagement.Add(item.Message));
             
             var result = apiResult.To(e => e.Payload);
