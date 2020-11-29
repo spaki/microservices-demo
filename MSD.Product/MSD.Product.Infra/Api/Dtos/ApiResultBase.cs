@@ -15,5 +15,11 @@ namespace MSD.Product.Infra.Api.Dtos
         public string Url { get; private set; }
         public WarningInfo Warning { get; private set; }
         public bool Success { get => Warning == null; }
+
+        public void SetException(Exception exception)
+        {
+            if(exception != null)
+                Warning = new WarningInfo(exception);
+        }
     }
 }

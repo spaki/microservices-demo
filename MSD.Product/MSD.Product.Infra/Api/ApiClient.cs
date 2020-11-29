@@ -30,30 +30,23 @@ namespace MSD.Product.Infra.Api
         public async Task<ApiResult<T>> GetAsync<T>(string url)
         {
             var retryPolice = GetRetryPolicy();
-            string json = null;
-            T data = default;
+            ApiResult<T> result = null;
 
             var executionResult = await retryPolice.ExecuteAndCaptureAsync(async () =>
             {
                 var response = await client.GetAsync(url);
+                result = await GetObjectFromHttpResponseAsync<T>(response);
 
-                try
-                {
-                    json = await response.Content.ReadAsStringAsync();
-                    data = JsonConvert.DeserializeObject<T>(json);
-                }
-                catch
-                { }
-
+                // -> The execution should fail, if some problem happens during the request.
                 response.EnsureSuccessStatusCode();
 
                 return response;
             });
 
-            if (executionResult.FinalException != null)
-                return new ApiResult<T>(data, url, executionResult.FinalException);
+            if (result == null)
+                result = new ApiResult<T>(url, new Exception("It was not possible to get the results"));
 
-            var result = new ApiResult<T>(data, url);
+            result.SetException(executionResult.FinalException);
 
             return result;
         }
@@ -120,5 +113,25 @@ namespace MSD.Product.Infra.Api
                         retryCount => TimeSpan.FromSeconds(Constants.CiscuitBreakerIntervalInSeconds),
                         (message, retryCount) => log.LogError($"API Problem ({retryCount} attempt): {message}")
                     );
+
+        private async Task<ApiResult<T>> GetObjectFromHttpResponseAsync<T>(HttpResponseMessage httpResponse)
+        {
+            var url = httpResponse.RequestMessage.RequestUri.AbsoluteUri;
+            T data = default;
+
+            try
+            {
+                // -> Trying to deserialize object without EnsureSuccessStatusCode()
+                //      because it can have some valid data
+                var json = await httpResponse.Content.ReadAsStringAsync();
+                data = JsonConvert.DeserializeObject<T>(json);
+                return new ApiResult<T>(data, url);
+            }
+            catch (Exception ex)
+            {
+                log.LogError(ex, "Error during the deserialization of http response content");
+                return new ApiResult<T>(data, url, ex);
+            }
+        }
     }
 }
