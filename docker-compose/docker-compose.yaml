@@ -14,7 +14,9 @@ services:
  ##########################################################
   msd-zipcode-v1-api-on:
     container_name: msd-zipcode-v1-api-on
-    image: msd-zipcode-v1-api
+    #image: msd-zipcode-v1-api
+    build:
+      context: ../MSD.ZipCode.V1
     ports:
       - 8091:80
     networks:
@@ -23,7 +25,9 @@ services:
 ##########################################################
   msd-zipcode-v2-api-on:
     container_name: msd-zipcode-v2-api-on
-    image: msd-zipcode-v2-api
+    #image: msd-zipcode-v2-api
+    build:
+      context: ../MSD.ZipCode.V2
     ports:
       - 8092:80
     networks:
@@ -34,7 +38,9 @@ services:
 ##########################################################
   msd-product-api-on:
     container_name: msd-product-api-on
-    image: msd-product-api
+    #image: msd-product-api
+    build:
+      context: ../MSD.Product
     ports:
       - 8090:80
     networks:
