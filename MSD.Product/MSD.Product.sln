@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSD.Product.Repository.API"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSD.Product.Infra", "MSD.Product.Infra\MSD.Product.Infra.csproj", "{9E6CCE4E-9E12-4292-A090-A27DB883D118}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSD.Product.Repository.ZipCode.V1.API", "MSD.Product.Repository.ZipCode.V1.API\MSD.Product.Repository.ZipCode.V1.API.csproj", "{849BDF8B-F0CC-4EA7-9FCC-B17C050D5EA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9E6CCE4E-9E12-4292-A090-A27DB883D118}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E6CCE4E-9E12-4292-A090-A27DB883D118}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E6CCE4E-9E12-4292-A090-A27DB883D118}.Release|Any CPU.Build.0 = Release|Any CPU
+		{849BDF8B-F0CC-4EA7-9FCC-B17C050D5EA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{849BDF8B-F0CC-4EA7-9FCC-B17C050D5EA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{849BDF8B-F0CC-4EA7-9FCC-B17C050D5EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{849BDF8B-F0CC-4EA7-9FCC-B17C050D5EA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

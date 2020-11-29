@@ -16,16 +16,20 @@ namespace MSD.Product.Repository.API
 {
     public class ProductRepositoryApi : RepositoryApiBase, IProductRepositoryApi
     {
+        private readonly AppSettings settings;
+
         public ProductRepositoryApi(
             HttpClient client, 
             AppSettings settings,
             ILogger<ProductRepositoryApi> log
-        ) : base(client, settings, log)
-        { }
+        ) : base(client, log)
+        {
+            this.settings = settings;
+        }
 
         public async Task<ApiResult<PagedResult<Domain.Models.Product>>> SearchAsync(string value = null, int page = 1)
         {
-            var dto = await GetAsync<PageDto<PeopleDto>>(new KeyValuePair<string, object>("search", value), new KeyValuePair<string, object>("page", page.ToString()));
+            var dto = await GetAsync<PageDto<PeopleDto>>(settings.StarWarsApiUrl ,new KeyValuePair<string, object>("search", value), new KeyValuePair<string, object>("page", page.ToString()));
             var totalPages = (int)Math.Ceiling(dto.Result?.count ?? 0 / Constants.DefaultPageSize * 1m);
             var result = dto.To(e => ConvertApiDtoToDomain(page, e, totalPages));
                 

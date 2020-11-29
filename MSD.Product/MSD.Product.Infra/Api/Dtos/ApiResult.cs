@@ -15,6 +15,8 @@ namespace MSD.Product.Infra.Api.Dtos
 
         public ApiResult(TResult result, string url, WarningInfo warning) : base(url, warning) => Result = result;
 
+        public ApiResult(TResult result, string url, Exception exception) : base(url, exception) => Result = result;
+
         public TResult Result { get; private set; }
 
         public ApiResult<TNewResult> To<TNewResult>(Func<TResult, TNewResult> conversion) => Result != null ? new ApiResult<TNewResult>(conversion.Invoke(Result), Url, Warning) : new ApiResult<TNewResult>(Url, Warning);

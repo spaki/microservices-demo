@@ -8,7 +8,7 @@ namespace MSD.Product.API.Controllers.Common
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
-    public class RootController : ControllerBase
+    public abstract class RootController : ControllerBase
     {
         private readonly WarningManagement warningManagement;
 
