@@ -10,6 +10,7 @@ using MSD.Product.Infra.Warning;
 using MSD.Product.Repository.API.Common;
 using MSD.Product.Repository.Db.Common;
 using MSD.Product.Repository.ZipCode.V1.API.Common;
+using MSD.Product.Repository.ZipCode.V2.API.Common;
 
 namespace MSD.Product.API
 {
@@ -29,6 +30,7 @@ namespace MSD.Product.API
             .AddScopedByBaseType<RepositoryDbBase>()
             .AddHttpClientWithRetryPolicies<RepositoryApiBase>()
             .AddHttpClientWithRetryPolicies<ZipCodeRepositoryApiV1Base>()
+            .AddHttpClientWithRetryPolicies<ZipCodeRepositoryApiV2Base>()
             .AddCustomControllers();
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider) => app

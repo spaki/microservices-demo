@@ -7,9 +7,9 @@ using MSD.Product.Infra.Warning;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace MSD.Product.API.Controllers.V1
+namespace MSD.Product.API.Controllers.V2
 {
-    [ApiVersion("1", Deprecated = true)]
+    [ApiVersion("2")]
     public class ZipCodeController : RootController
     {
         private readonly IZipCodeService zipCodeService;
@@ -23,6 +23,6 @@ namespace MSD.Product.API.Controllers.V1
         }
 
         [HttpGet("{zipCode}")]
-        public async Task<ActionResult<ApiDefaultResponse<Address>>> GetByExternalIdAsync(string zipCode) => Response(await zipCodeService.GetAddressByZipCodeV1Async(HttpUtility.UrlDecode(zipCode)).ConfigureAwait(false));
+        public async Task<ActionResult<ApiDefaultResponse<Address>>> GetByExternalIdAsync(string zipCode) => Response(await zipCodeService.GetAddressByZipCodeV2Async(HttpUtility.UrlDecode(zipCode)).ConfigureAwait(false));
     }
 }

@@ -10,7 +10,7 @@ using System.Web;
 
 namespace MSD.Product.API.Controllers
 {
-    public class ProductController : V1Controller
+    public class ProductController : RootController
     {
         private readonly IProductService productService;
 

@@ -3,13 +3,13 @@ using MSD.Product.Domain.Interfaces.Repositories.Common;
 using MSD.Product.Infra.Api;
 using System.Net.Http;
 
-namespace MSD.Product.Repository.ZipCode.V1.API.Common
+namespace MSD.Product.Repository.ZipCode.V2.API.Common
 {
-    public abstract class ZipCodeRepositoryApiV1Base : ApiClient, IRepositoryBase
+    public abstract class ZipCodeRepositoryApiV2Base : ApiClient, IRepositoryBase
     {
-        protected ZipCodeRepositoryApiV1Base(
+        protected ZipCodeRepositoryApiV2Base(
             HttpClient client,
-            ILogger<ZipCodeRepositoryApiV1Base> log
+            ILogger<ZipCodeRepositoryApiV2Base> log
         ) : base(client, log)
         {
         }

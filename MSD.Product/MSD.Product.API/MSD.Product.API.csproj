@@ -19,6 +19,7 @@
     <ProjectReference Include="..\MSD.Product.Repository.API\MSD.Product.Repository.API.csproj" />
     <ProjectReference Include="..\MSD.Product.Repository.Db\MSD.Product.Repository.Db.csproj" />
     <ProjectReference Include="..\MSD.Product.Repository.ZipCode.V1.API\MSD.Product.Repository.ZipCode.V1.API.csproj" />
+    <ProjectReference Include="..\MSD.Product.Repository.ZipCode.V2.API\MSD.Product.Repository.ZipCode.V2.API.csproj" />
   </ItemGroup>
 
 

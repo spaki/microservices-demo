@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSD.Product.Infra", "MSD.Pr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSD.Product.Repository.ZipCode.V1.API", "MSD.Product.Repository.ZipCode.V1.API\MSD.Product.Repository.ZipCode.V1.API.csproj", "{849BDF8B-F0CC-4EA7-9FCC-B17C050D5EA9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSD.Product.Repository.ZipCode.V2.API", "MSD.Product.Repository.ZipCode.V2.API\MSD.Product.Repository.ZipCode.V2.API.csproj", "{C3632E84-E474-4CFD-952B-2622DE7538B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{849BDF8B-F0CC-4EA7-9FCC-B17C050D5EA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{849BDF8B-F0CC-4EA7-9FCC-B17C050D5EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{849BDF8B-F0CC-4EA7-9FCC-B17C050D5EA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3632E84-E474-4CFD-952B-2622DE7538B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3632E84-E474-4CFD-952B-2622DE7538B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3632E84-E474-4CFD-952B-2622DE7538B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3632E84-E474-4CFD-952B-2622DE7538B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
