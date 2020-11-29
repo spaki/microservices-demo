@@ -38,8 +38,9 @@ namespace MSD.Product.API.Configuration
         {
             services.AddApiVersioning(p =>
             {
-                p.DefaultApiVersion = new ApiVersion(1, 0);
-                p.ReportApiVersions = true;
+                //p.DefaultApiVersion = new ApiVersion(1, 0);
+                p.DefaultApiVersion = new ApiVersion(2, 0);
+                p.ReportApiVersions = true; // -> api version info in the header 
                 p.AssumeDefaultVersionWhenUnspecified = true;
             });
 
@@ -185,7 +186,10 @@ namespace MSD.Product.API.Configuration
             {
                 var swaggerJsonBasePath = string.IsNullOrWhiteSpace(options.RoutePrefix) ? "." : "..";
 
-                foreach (var description in provider.ApiVersionDescriptions)
+                var versions = provider.ApiVersionDescriptions.ToList();
+                versions.Reverse();
+
+                foreach (var description in versions)
                     options.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/{description.GroupName}/swagger.json", description.GroupName);
 
                 options.DocExpansion(DocExpansion.List);

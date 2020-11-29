@@ -10,6 +10,8 @@ using System.Web;
 
 namespace MSD.Product.API.Controllers
 {
+    [ApiVersion("1", Deprecated = true)]
+    [ApiVersion("2")]
     public class ProductController : RootController
     {
         private readonly IProductService productService;

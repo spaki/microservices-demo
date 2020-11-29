@@ -4,12 +4,14 @@ using MSD.Product.API.Models;
 using MSD.Product.Domain.Dtos.ZipCode;
 using MSD.Product.Domain.Interfaces.Services;
 using MSD.Product.Infra.Warning;
+using System;
 using System.Threading.Tasks;
 using System.Web;
 
 namespace MSD.Product.API.Controllers.V1
 {
     [ApiVersion("1", Deprecated = true)]
+    [Obsolete]
     public class ZipCodeController : RootController
     {
         private readonly IZipCodeService zipCodeService;
