@@ -24,7 +24,7 @@ namespace MSD.Product.API
             .AddSingleton(AppSettings)
             .AddMemoryDb()
             .AddCustomApiVersioning()
-            .AddSwaggerGen()
+            .AddCustomSwaggerDocGenForApiVersioning()
             .AddScoped<WarningManagement>()
             .AddScopedByBaseType<ServiceBase>()
             .AddScopedByBaseType<RepositoryDbBase>()

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using MSD.Product.Repository.Db.Context;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
@@ -47,6 +48,21 @@ namespace MSD.Product.API.Configuration
                 p.GroupNameFormat = "'v'VVV";
                 p.SubstituteApiVersionInUrl = true;
             });
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomSwaggerDocGenForApiVersioning(this IServiceCollection services)
+        {
+            //services.AddSwaggerGen();
+            var provider = services.BuildServiceProvider();
+            var apiVersionDescriptionProvider = provider.GetRequiredService<IApiVersionDescriptionProvider>();
+
+            services.AddSwaggerGen(options => {
+                foreach (var item in apiVersionDescriptionProvider.ApiVersionDescriptions)
+                    options.SwaggerDoc(item.GroupName, new OpenApiInfo { Title = "Micro Service Demo - Product API", Version = item.ApiVersion.ToString() });
+            });
+            
 
             return services;
         }
@@ -170,7 +186,7 @@ namespace MSD.Product.API.Configuration
                 var swaggerJsonBasePath = string.IsNullOrWhiteSpace(options.RoutePrefix) ? "." : "..";
 
                 foreach (var description in provider.ApiVersionDescriptions)
-                    options.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+                    options.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/{description.GroupName}/swagger.json", description.GroupName);
 
                 options.DocExpansion(DocExpansion.List);
             });
