@@ -3,7 +3,7 @@
 In this repository you can find 3 microservices, and some techs that you probably will enjoy.
 :)
 
-In order **to run** the all the services, there is a folder with the **docker-compose.yaml**. After that you will find an Swagger UI in the http://localhost:8090/swagger.
+In order **to run** all the services, there is a folder with the **docker-compose.yaml**. After that you will find an Swagger UI in the http://localhost:8090/swagger.
 
 ![demo](docs/imgs/demo.jpg)
 
