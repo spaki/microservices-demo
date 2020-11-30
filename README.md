@@ -12,7 +12,7 @@ The idea behind this Service is to be a **API REST**, to get products list from 
 
 Let's assume that you have an external API with your products catalogue. I this case it was used the Star Wars API https://swapi.dev/. 
 
-The service will consume items from the Star Wars API and it possible to set price for those items. the prices it is stored in memory db using **Entity Framework Core**.
+The service will consume items from the Star Wars API and it possible to set price for them. The prices are stored in memory db using **Entity Framework Core**.
 
 Also it integrates another service to get address details from a ZipCode (the implementation is based on Correios Brazilian Post Service). There are two integrations, one with cache and another without it. This way we have an API/Versioning system, with a deprecated operation.
 
