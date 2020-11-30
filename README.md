@@ -5,7 +5,7 @@ In this repository you can find 3 microservices, and some techs that you probabl
 
 In order **to run** the all the services, there is a folder with the **docker-compose.yaml**. After that you will find an Swagger UI in the http://localhost:8090/swagger.
 
-
+![demo](docs/imgs/demo.jpg)
 
 ## 1-) Microservice **Product**: 
 The idea behind this Service is to be a **API REST**, to get products list from another API, and set price to them.
