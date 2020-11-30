@@ -22,8 +22,8 @@ The internal structure of the Solution and Projects is based on vast concepts of
 
 
 ## 2-) Microservice ZipCode V1:
-Here we have a wrapper for Correios Postal Service **SOAP** webservice, using **WCF** to consume and exposing the data in **JSON** with **API REST** calls. It is a very simple microservice and that is the ideia with it.
-Despite of the simplicity, the service also contains **Swagger** documentation It is built on **.NET Core 3.1**.
+Here we have a wrapper for Correios Postal Service **SOAP** webservice, using **WCF** to consume and exposing in a **JSON** format, with **API REST** calls. It is a very simple microservice and that is the ideia hre, a kind of wrapper.
+Despite of the simplicity, the service also contains **Swagger** documentation. It is built on **.NET Core 3.1**.
 
 ## 3-) Microservice ZipCode V2:
 Is the evolution of ZipCode V1. It already has some concepts of **DDD**, but mainly use a cache system with **Redis** (with 20 seconds of cache).
