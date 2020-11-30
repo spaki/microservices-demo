@@ -22,6 +22,13 @@ namespace MSD.Product.API.Controllers.V2
             this.zipCodeService = zipCodeService;
         }
 
+        /// <summary>
+        /// Search for address info in the Brazillian Correios Post Service
+        /// This Endpoint keep 20 seconds of Redis Cache
+        /// (Internal communication it will be performed by WCF)
+        /// </summary>
+        /// <param name="zipCode">Zip Code, example: 80020000</param>
+        /// <returns>Default API Response with address info</returns>
         [HttpGet("{zipCode}")]
         public async Task<ActionResult<ApiDefaultResponse<Address>>> GetByExternalIdAsync(string zipCode) => Response(await zipCodeService.GetAddressByZipCodeV2Async(HttpUtility.UrlDecode(zipCode)).ConfigureAwait(false));
     }

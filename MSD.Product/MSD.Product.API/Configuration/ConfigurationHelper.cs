@@ -10,6 +10,7 @@ using MSD.Product.Repository.Db.Context;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json.Serialization;
@@ -55,21 +56,28 @@ namespace MSD.Product.API.Configuration
 
         public static IServiceCollection AddCustomSwaggerDocGenForApiVersioning(this IServiceCollection services)
         {
-            //services.AddSwaggerGen();
+            // -> "compile" the IoC container to get the api version list from provider.
             var provider = services.BuildServiceProvider();
             var apiVersionDescriptionProvider = provider.GetRequiredService<IApiVersionDescriptionProvider>();
 
             services.AddSwaggerGen(options => {
                 foreach (var item in apiVersionDescriptionProvider.ApiVersionDescriptions)
                     options.SwaggerDoc(item.GroupName, new OpenApiInfo { Title = "Micro Service Demo - Product API", Version = item.ApiVersion.ToString() });
+
+                // -> Get the comments from controllers actions to swagger use them
+                options.IncludeXmlComments(
+                    Path.Combine(
+                        AppContext.BaseDirectory, 
+                        $"{Assembly.GetExecutingAssembly().GetName().Name}.xml")
+                    );
             });
-            
 
             return services;
         }
 
         public static IServiceCollection AddCustomControllers(this IServiceCollection services)
         {
+            // -> format enums as strings
             services
                 .AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
@@ -77,9 +85,11 @@ namespace MSD.Product.API.Configuration
             return services;
         }
 
-        /// <summary>
-        /// API Circuit Breaker
-        /// </summary>
+        // -> Ok, we have a bit of a mess.
+        //      We need to add the http clients to IoC container manage the http sockets (it is a limited OS ressources).
+        //      First, I need a way to register the API (http) clients, dinamically, type based.
+        //      I have the possibility to register the Polly Circuit Breaker Policy, for those clients, 
+        //      but it would be a poor situation to handle with the fail attempts.
         public static IServiceCollection AddHttpClientWithRetryPolicies<TBase>(this IServiceCollection services)
         {
             //var attempts = 3;
@@ -184,11 +194,13 @@ namespace MSD.Product.API.Configuration
 
             app.UseSwaggerUI(options =>
             {
+                // -> helps to handle with the Areas, case exists
                 var swaggerJsonBasePath = string.IsNullOrWhiteSpace(options.RoutePrefix) ? "." : "..";
 
                 var versions = provider.ApiVersionDescriptions.ToList();
                 versions.Reverse();
 
+                // -> drop down list for the doc spec
                 foreach (var description in versions)
                     options.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/{description.GroupName}/swagger.json", description.GroupName);
 

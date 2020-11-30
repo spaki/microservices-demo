@@ -17,6 +17,12 @@ namespace MSD.Product.API.Controllers.Common
             this.warningManagement = warningManagement;
         }
 
+        /// <summary>
+        /// Check warnings and format the response
+        /// </summary>
+        /// <typeparam name="T">Payload Type</typeparam>
+        /// <param name="result">Payload</param>
+        /// <returns>Payload into formatted response</returns>
         protected ActionResult<ApiDefaultResponse<T>> Response<T>(T result)
         {
             var response = new ApiDefaultResponse<T>(result, !warningManagement.Any(), warningManagement.List());
@@ -27,6 +33,11 @@ namespace MSD.Product.API.Controllers.Common
             return BadRequest(response);
         }
 
+        /// <summary>
+        /// Check warnings and format the response
+        /// </summary>
+        /// <param name="task">Task to handle with the request</param>
+        /// <returns>Fromatted response</returns>
         protected async Task<ActionResult<ApiDefaultResponseBase>> Response(ConfiguredTaskAwaitable task)
         {
             await task;
