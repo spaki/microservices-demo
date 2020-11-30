@@ -29,6 +29,7 @@ namespace MSD.Product.Infra.Api
 
         public async Task<ApiResult<T>> GetAsync<T>(string url)
         {
+            // -> Circuit Break Pattern
             var retryPolice = GetRetryPolicy();
             ApiResult<T> result = null;
 
@@ -122,7 +123,7 @@ namespace MSD.Product.Infra.Api
             try
             {
                 // -> Trying to deserialize object without EnsureSuccessStatusCode()
-                //      because it can have some valid data
+                //      because it can have some important data
                 var json = await httpResponse.Content.ReadAsStringAsync();
                 data = JsonConvert.DeserializeObject<T>(json);
                 return new ApiResult<T>(data, url);

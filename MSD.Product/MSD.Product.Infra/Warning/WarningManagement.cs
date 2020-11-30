@@ -35,6 +35,8 @@ namespace MSD.Product.Infra.Warning
 
         public bool Any() => items.Any();
 
+        public void Clear() => items.Clear();
+
         public List<WarningInfo> List() => items;
     }
 }
