@@ -33,5 +33,8 @@ As usual, it is built on **.NET Core 3.1** and has **Swagger** as well.
 ## Docker
 Each project has its own **Docker file** to build the images. Also there is a **docker-compose.yaml** to run all the microservices and the **Redis**. There is no necessity of database, because the data is persisted in memory.
 
+## Tests
+There is a project with the tests related to domain, model end service. This project is using **MS Test** e **Moq**.
+
 ## Wrap Up 
 This is a demo, not a final product. But is very interesting study the structure and technologies used in these implementations, to bring that to your real projects. So enjoy!
