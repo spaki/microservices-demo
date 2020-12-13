@@ -2,9 +2,13 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using MSD.Sales.Infra.Settings;
+using MSD.Sales.Repository.Db.Context;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
@@ -25,6 +29,18 @@ namespace MSD.Sales.Configuration
         }
 
 
+
+        public static IServiceCollection AddSqlServerMainDb(this IServiceCollection services, AppSettings settings)
+        {
+            services.AddDbContext<MainDbContext>(options =>
+                options
+                    .UseLazyLoadingProxies()
+                    .UseSqlServer(settings.ConnectionString)
+                    .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.LazyLoadOnDisposedContextWarning))
+            );
+
+            return services;
+        }
 
         public static IServiceCollection AddCustomApiVersioning(this IServiceCollection services)
         {

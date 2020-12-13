@@ -8,6 +8,8 @@ using MSD.Sales.Configuration;
 using MSD.Sales.Domain.Handlers.Common;
 using MSD.Sales.Infra.NotificationSystem;
 using MSD.Sales.Infra.Settings;
+using MSD.Sales.Repository.Db.Repositories.Common;
+using MSD.Sales.Repository.Product.Api.Common;
 
 namespace MSD.Sales
 {
@@ -22,8 +24,11 @@ namespace MSD.Sales
             .AddCustomApiVersioning()
             .AddCustomSwaggerDocGenForApiVersioning()
             .AddCustomControllers()
+            .AddSqlServerMainDb(AppSettings)
             .AddScoped<NotificationManagement>()
             .AddMediatR(typeof(HandlerBase))
+            .AddScopedByBaseType<RepositoryDbBase>()
+            .AddHttpClientWithRetryPolicies<ProductRepositoryApiBase>()
             ;
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider) => app

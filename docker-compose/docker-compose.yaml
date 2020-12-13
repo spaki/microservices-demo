@@ -48,12 +48,6 @@ services:
     depends_on:
       - msd-zipcode-v1-api-on
       - msd-zipcode-v2-api-on
- 
-
-
-volumes:
-  mq_data:
-  elasticsearch_data:
 
 networks:
   greennet:

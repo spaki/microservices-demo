@@ -15,6 +15,14 @@ namespace MSD.Sales.Infra.NotificationSystem
             items.Add(notification);
         }
 
+        public void Add(List<Notification> notification)
+        {
+            if (notification == null || !notification.Any())
+                return;
+
+            items.AddRange(notification);
+        }
+
         public void Add(string message)
         {
             if (string.IsNullOrWhiteSpace(message))

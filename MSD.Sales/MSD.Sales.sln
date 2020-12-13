@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSD.Sales", "MSD.Sales\MSD.Sales.csproj", "{C7080403-072A-4678-868B-3A0BC1CA6546}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSD.Sales", "MSD.Sales\MSD.Sales.csproj", "{C7080403-072A-4678-868B-3A0BC1CA6546}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSD.Sales.Infra", "MSD.Sales.Infra\MSD.Sales.Infra.csproj", "{6B89DA4D-437E-40A6-B6B8-991D1C002BCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSD.Sales.Infra", "MSD.Sales.Infra\MSD.Sales.Infra.csproj", "{6B89DA4D-437E-40A6-B6B8-991D1C002BCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSD.Sales.Domain", "MSD.Sales.Domain\MSD.Sales.Domain.csproj", "{05BD2DA0-47D6-4D50-9094-9B8B598A898E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSD.Sales.Domain", "MSD.Sales.Domain\MSD.Sales.Domain.csproj", "{05BD2DA0-47D6-4D50-9094-9B8B598A898E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSD.Sales.Repository.Db", "MSD.Sales.Repository.Db\MSD.Sales.Repository.Db.csproj", "{E8C80B27-5904-4CC2-864A-E8AFD8794247}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSD.Sales.Repository.Product.Api", "MSD.Sales.Repository.Product.Api\MSD.Sales.Repository.Product.Api.csproj", "{6CDC1BC4-9374-4785-8A93-764E411ACDB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{05BD2DA0-47D6-4D50-9094-9B8B598A898E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05BD2DA0-47D6-4D50-9094-9B8B598A898E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05BD2DA0-47D6-4D50-9094-9B8B598A898E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8C80B27-5904-4CC2-864A-E8AFD8794247}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8C80B27-5904-4CC2-864A-E8AFD8794247}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8C80B27-5904-4CC2-864A-E8AFD8794247}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8C80B27-5904-4CC2-864A-E8AFD8794247}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CDC1BC4-9374-4785-8A93-764E411ACDB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CDC1BC4-9374-4785-8A93-764E411ACDB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CDC1BC4-9374-4785-8A93-764E411ACDB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CDC1BC4-9374-4785-8A93-764E411ACDB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

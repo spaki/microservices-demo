@@ -15,8 +15,9 @@ namespace MSD.Sales.Domain.Handlers
 
         public LogHandler(
             NotificationManagement notificationManagement,
+            IMediator mediator,
             ILogger<LogHandler> log
-        ) : base(notificationManagement)
+        ) : base(notificationManagement, mediator)
         {
             this.log = log;
         }

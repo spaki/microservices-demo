@@ -12,12 +12,18 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MSD.Sales.Domain\MSD.Sales.Domain.csproj" />
     <ProjectReference Include="..\MSD.Sales.Infra\MSD.Sales.Infra.csproj" />
+    <ProjectReference Include="..\MSD.Sales.Repository.Db\MSD.Sales.Repository.Db.csproj" />
+    <ProjectReference Include="..\MSD.Sales.Repository.Product.Api\MSD.Sales.Repository.Product.Api.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>
