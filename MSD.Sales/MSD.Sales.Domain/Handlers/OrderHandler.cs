@@ -4,6 +4,7 @@ using MSD.Sales.Domain.Dtos;
 using MSD.Sales.Domain.Events;
 using MSD.Sales.Domain.Handlers.Common;
 using MSD.Sales.Domain.Interfaces.Repositories;
+using MSD.Sales.Domain.Models;
 using MSD.Sales.Infra.Api;
 using MSD.Sales.Infra.NotificationSystem;
 using System;
@@ -16,18 +17,23 @@ namespace MSD.Sales.Domain.Handlers
         IRequestHandler<OrderCreateCommand, OrderCreateResult>
     {
         private readonly IProductRepositoryApi productRepositoryApi;
+        private readonly IOrderRepositoryDb orderRepositoryDb;
 
         public OrderHandler(
             NotificationManagement notificationManagement,
             IMediator mediator,
-            IProductRepositoryApi productRepositoryApi
+            IProductRepositoryApi productRepositoryApi,
+            IOrderRepositoryDb orderRepositoryDb
         ) : base(notificationManagement, mediator)
         {
             this.productRepositoryApi = productRepositoryApi;
+            this.orderRepositoryDb = orderRepositoryDb;
         }
 
         public async Task<OrderCreateResult> Handle(OrderCreateCommand request, CancellationToken cancellationToken)
         {
+            var entity = new Models.Order();
+
             foreach (var item in request.Items)
             {
                 var productResponse = await productRepositoryApi.GetByExternalIdAsync(item.ExternalId);
@@ -36,10 +42,14 @@ namespace MSD.Sales.Domain.Handlers
 
                 if (notificationManagement.Any())
                     return null;
+
+                entity.AddItem(item.ExternalId, productResponse.Payload.Name, item.Quantity, productResponse.Payload.Price.Value);
             }
 
-            var result = new OrderCreateResult { Number = Guid.NewGuid().ToString() };
-            await mediator.Publish(new OrderCreatedEvent { Number = result.Number });
+            await orderRepositoryDb.SaveAsync(entity);
+            await mediator.Publish(new OrderCreatedEvent { Number = entity.Number });
+
+            var result = new OrderCreateResult { Number = entity.Number };
             return result;
         }
 

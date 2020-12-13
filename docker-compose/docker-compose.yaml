@@ -11,6 +11,19 @@ services:
     networks:
       - greennet
 
+##########################################################
+  sql-server-order-on:
+    container_name: sql-server-order-on
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+      SA_PASSWORD: "lqsServer123!@#"
+      MSSQL_PID: "Express"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - greennet
+
  ##########################################################
   msd-zipcode-v1-api-on:
     container_name: msd-zipcode-v1-api-on
@@ -48,6 +61,20 @@ services:
     depends_on:
       - msd-zipcode-v1-api-on
       - msd-zipcode-v2-api-on
+
+##########################################################
+  msd-sales-api-on:
+    container_name: msd-sales-api-on
+    #image:msd-sales-api
+    build:
+      context: ../MSD.Sales
+    ports:
+      - 8093:80
+    networks:
+      - greennet
+    depends_on:
+      - sql-server-order-on
+      - msd-product-api-on
 
 networks:
   greennet:

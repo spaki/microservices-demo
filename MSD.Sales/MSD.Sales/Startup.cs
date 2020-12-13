@@ -39,6 +39,7 @@ namespace MSD.Sales
             .UseRouting()
             .UseAuthorization()
             .UseControllersEndpoints()
+            .UseDatabaseInitialization()
             ;
     }
 }

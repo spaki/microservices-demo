@@ -7,7 +7,7 @@ namespace MSD.Sales.Domain.Models
     {
         public OrderItem()
         {
-
+            CreatedAtUtc = EditedAtUtc = DateTime.UtcNow;
         }
 
         public virtual string Name { get; set; }

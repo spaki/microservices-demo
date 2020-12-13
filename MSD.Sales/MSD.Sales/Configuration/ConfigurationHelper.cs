@@ -157,6 +157,16 @@ namespace MSD.Sales.Configuration
             return app;
         }
 
+        public static IApplicationBuilder UseDatabaseInitialization(this IApplicationBuilder app)
+        {
+            using (var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                scope.ServiceProvider.GetRequiredService<MainDbContext>().Database.Migrate();
+            }
+
+            return app;
+        }
+
 
 
         private static List<Type> ListTypesOf<TBase>()
